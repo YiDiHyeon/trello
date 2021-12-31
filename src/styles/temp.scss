@@ -1,0 +1,133 @@
+@charset "utf-8";
+@import "../styles/mixin";
+
+#app {
+  min-height: 100vh;
+  background-color: antiquewhite;
+}
+
+.header {
+  padding:12px;
+  background-color: burlywood;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h1 {
+    display:flex;
+    align-items: center;
+    font-size: 24px;
+    line-height: 1;
+  }
+}
+
+.container {
+  width: 100%;
+  height:100%;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+  margin:10px;
+  padding:10px;
+  font-size: 12px;
+  .contents {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    >span  {
+      display: block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .btn-wrap {
+      display: flex;
+    }
+  }
+}
+
+.item {
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+  margin:10px;
+  padding:15px;
+}
+
+.j-row {
+  overflow: hidden;
+}
+
+.j-col {
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+
+  @for $i from 0 through 24 {
+    .j-col-#{$i} {
+      width: (1 / 24 * $i * 100) * 1%;
+    }
+  }
+}
+
+@include mobile {
+  @for $mo from 0 through 24 {
+    .j-col-#{$mo} {
+      width: (1 / 24 * $mo * 100) * 1%;
+    }
+  }
+}
+
+@include tablet {
+  @for $ta from 0 through 24 {
+    .j-col-#{$ta} {
+      width: (1 / 24 * $ta * 100) * 2%;
+    }
+  }
+}
+
+@include desktop {
+  @for $de from 0 through 24 {
+    .j-col-#{$de} {
+      width: (1 / 24 * $de * 100) * 1%;
+    }
+  }
+}
+
+
+
+
+
+.input {
+  border:transparent;
+  outline: transparent;
+  padding:4px 8px;
+  background-color: #fff;
+  border-bottom:1px solid #ddd;
+  width: 100%;
+}
+
+.btn {
+  padding:4px 8px;
+  outline: transparent;
+  border:transparent;
+  font-weight:bold;
+
+  &.red {
+    background-color: indianred;
+    color:#fff;
+  }
+
+  &.gray {
+    color:#000;
+    background-color: aliceblue;
+  }
+  &.outline {
+    color:#000;
+    border:1px solid #000;
+    background-color: transparent;
+  }
+}
