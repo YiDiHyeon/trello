@@ -1,11 +1,19 @@
 import request from '../request/apiRequest'
 
-export const getDoingList = () => {
+export const getTrelloList = () => {
   return request({
-    url: `/doing`,
+    url: `/list`,
     method: 'get',
   })
 }
+
+// export const postDoingList = (data) => {
+//   return request({
+//     url: `/doing`,
+//     method: 'post',
+//     data
+//   })
+// }
 
 export const getTodoList = () => {
   return request({
