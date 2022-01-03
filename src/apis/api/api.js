@@ -7,13 +7,20 @@ export const getTrelloList = () => {
   })
 }
 
-// export const postDoingList = (data) => {
-//   return request({
-//     url: `/doing`,
-//     method: 'post',
-//     data
-//   })
-// }
+export const postTrelloList = (data) => {
+  return request({
+    url: `/list`,
+    method: 'post',
+    data,
+  })
+}
+
+export const deleteTrelloList = (id) => {
+  return request({
+    url: `/list/${id}`,
+    method: 'delete',
+  })
+}
 
 export const getTodoList = () => {
   return request({
