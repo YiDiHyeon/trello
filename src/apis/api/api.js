@@ -1,12 +1,14 @@
 import request from '../request/apiRequest'
 
+/* list */
 export const getTrelloList = () => {
   return request({
-    url: `/list`,
+    url: `/list?_embed=card`,
     method: 'get',
   })
 }
 
+/* list 추가 */
 export const postTrelloList = (data) => {
   return request({
     url: `/list`,
@@ -15,6 +17,7 @@ export const postTrelloList = (data) => {
   })
 }
 
+/* list 삭제 */
 export const deleteTrelloList = (id) => {
   return request({
     url: `/list/${id}`,
@@ -22,16 +25,27 @@ export const deleteTrelloList = (id) => {
   })
 }
 
-export const getTodoList = () => {
+/* card list */
+export const getTrelloCard = () => {
   return request({
-    url: `/todo`,
+    url: `/card`,
     method: 'get',
   })
 }
 
-export const getDoneList = () => {
+/* card 추가 */
+export const postTrelloCard = (data) => {
   return request({
-    url: `/done`,
-    method: 'get',
+    url: `/card`,
+    method: 'post',
+    data,
+  })
+}
+
+/* card 삭제 */
+export const deleteTrelloCard = (id) => {
+  return request({
+    url: `/card/${id}`,
+    method: 'delete',
   })
 }

@@ -18,36 +18,47 @@
                   <button class="btn gray mg-l-10" @click="listDelete(element)">Del</button>
                 </div>
               </div>
+              <j-row>
+                <draggable v-model="card" v-bind="cardDragOptions" group="card" :move="onMove">
+                  <j-row v-for="item in card" :key="item.id" class="card">
+                    <!--                    <div @click="handleOpenCard(item)">{{ item.title }}</div>-->
+                    <card-item :card="item"></card-item>
+                  </j-row>
+                </draggable>
+              </j-row>
               <button class="btn" @click="addCard(element)">card Add+</button>
             </div>
           </j-col>
         </draggable>
       </j-row>
     </article>
-    <popup-info-dialog
-      :visible.sync="modifyDialog.visible"
+    <card-dialog
+      :visible.sync="cardDialog.visible"
+      :list="cardDialog.list"
+      :card="cardDialog.item"
       @handleCloseDialog="handleCloseInfoDialog"
-    ></popup-info-dialog>
+    ></card-dialog>
   </section>
 </template>
 <script>
 import draggable from 'vuedraggable'
-import { getTrelloList, postTrelloList, deleteTrelloList } from '@/apis/api/api'
+import { getTrelloList, postTrelloList, deleteTrelloList, getTrelloCard } from '@/apis/api/api'
 import JRow from '@/components/layout/j-row'
 import JCol from '@/components/layout/j-col'
-import popupInfoDialog from '@/view/components/modifyDialog'
+import CardDialog from '@/view/components/cardDialog'
+import CardItem from '@/view/components/cardItem'
 export default {
   name: 'HelloTrello',
-  components: { JRow, JCol, draggable, popupInfoDialog },
+  components: { CardItem, JRow, JCol, draggable, CardDialog },
   data() {
     return {
-      modifyDialog: {
+      cardDialog: {
         visible: false,
         type: '',
         width: '80%',
       },
-      newListDescription: '',
       list: [],
+      card: [],
       title: '',
       test: '',
     }
@@ -60,22 +71,15 @@ export default {
         animation: 150, // ms, 정렬시 애니메이션 속도 이동 항목,`0 '— 애니메이션 없음
         easing: 'cubic-bezier(1, 0, 0, 1)', // 애니메이션 완화. 기본값은 null입니다. 예는 https://easings.net/을 참조하세요.
         ghostClass: 'ghost', // 놓을 장소의 클래스명 지정
-        chosenClass: 'sortable-chosen', // 선택 항목의 클래스명 지정
-        dragClass: 'sortable-drag', // 드래그하는 항목의 클래스명 지정
-        // handle: '.test',
-        // swapThreshold: 1,
       }
     },
-    itemDragOptions() {
+    cardDragOptions() {
       return {
-        group: 'options',
+        group: 'card',
         disabled: false,
         animation: 150, // ms, 정렬시 애니메이션 속도 이동 항목,`0 '— 애니메이션 없음
         easing: 'cubic-bezier(1, 0, 0, 1)', // 애니메이션 완화. 기본값은 null입니다. 예는 https://easings.net/을 참조하세요.
         ghostClass: 'ghost', // 놓을 장소의 클래스명 지정
-        chosenClass: 'sortable-chosen', // 선택 항목의 클래스명 지정
-        dragClass: 'sortable-drag', // 드래그하는 항목의 클래스명 지정
-        // handle: '.test',
       }
     },
   },
@@ -85,27 +89,43 @@ export default {
   methods: {
     init() {
       this.getList()
+      this.getCardList()
+    },
+    resetData() {
+      this.title = ''
     },
     onMove(evt) {
       console.log(evt)
     },
+    handleOpenCard(item) {
+      this.cardDialog.card = item
+      this.cardDialog.visible = true
+    },
     handleCloseInfoDialog() {
-      this.modifyDialog.visible = false
+      this.cardDialog.visible = false
     },
     getList() {
-      getTrelloList()
+      getTrelloList({})
         .then((response) => {
-          this.list = response
+          this.list = [...response]
           console.log(response)
+        })
+        .catch((error) => {})
+    },
+    getCardList() {
+      getTrelloCard()
+        .then((response) => {
+          console.log(response)
+          this.card = response
         })
         .catch((error) => {})
     },
     listDelete(element) {
       console.log(element)
-      if (confirm('정말 삭제하시겠습니까?')) {
+      if (confirm('정말 삭제?')) {
         deleteTrelloList(element.id)
           .then((response) => {
-            console.log(response)
+            this.getList()
           })
           .catch(() => {
             // alert('리스트 삭제가 취소되었습니다.')
@@ -118,36 +138,20 @@ export default {
       }
       postTrelloList(newListTitle)
         .then((response) => {
-          console.log(response)
+          this.getList()
+          this.title = ''
         })
         .catch((error) => {})
-
-      // this.list.push({
-      //   id: this.id,
-      //   title: this.title,
-      //   description: this.description,
-      // })
-      // this.list.id++
-      // this.newListTitle = ''
     },
-    addCard(element) {
-      this.modifyDialog.visible = true
+    addCard(list) {
+      this.cardDialog.list = list
+      this.cardDialog.visible = true
     },
-    addTask(list, id) {
-      if (!this.newTaskName) {
-        return
-      }
-      console.log(this.newTaskName)
-      console.log(list.id)
-      list.element.push({
-        id: this.id,
-        name: this.name,
-        description: this.description,
-      })
-      this.newTaskName = ''
-      list.addingTask = false
-    },
-    cancelTaskAdd() {},
   },
 }
 </script>
+<style lang="scss">
+.ghost {
+  border: 2px dotted rosybrown;
+}
+</style>

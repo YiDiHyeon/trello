@@ -157,11 +157,11 @@
 import JCol from '@/components/layout/j-col'
 import draggable from 'vuedraggable'
 import JRow from '@/components/layout/j-row'
-import popupInfoDialog from '@/view/components/modifyDialog'
+import popupInfoDialog from '@/view/components/cardDialog'
 import { getDoingList, getTodoList } from '@/apis/api/api'
 let id = 1
 export default {
-  name: 'HelloTrello_2',
+  name: 'HelloTrello2',
   components: { JRow, JCol, draggable, popupInfoDialog },
   data() {
     return {
