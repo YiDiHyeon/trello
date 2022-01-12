@@ -1,51 +1,51 @@
 import request from '../request/apiRequest'
 
-/* list */
+/* lists */
 export const getTrelloList = () => {
   return request({
-    url: `/list?_embed=card`,
+    url: `/lists?_embed=cards`,
     method: 'get',
   })
 }
 
-/* list 추가 */
+/* lists 추가 */
 export const postTrelloList = (data) => {
   return request({
-    url: `/list`,
+    url: `/lists`,
     method: 'post',
     data,
   })
 }
 
-/* list 삭제 */
+/* lists 삭제 */
 export const deleteTrelloList = (id) => {
   return request({
-    url: `/list/${id}`,
+    url: `/lists/${id}`,
     method: 'delete',
   })
 }
 
-/* card list */
+/* cards lists */
 export const getTrelloCard = () => {
   return request({
-    url: `/card`,
+    url: `/cards`,
     method: 'get',
   })
 }
 
-/* card 추가 */
+/* cards 추가 */
 export const postTrelloCard = (data) => {
   return request({
-    url: `/card`,
+    url: `/cards`,
     method: 'post',
     data,
   })
 }
 
-/* card 삭제 */
+/* cards 삭제 */
 export const deleteTrelloCard = (id) => {
   return request({
-    url: `/card/${id}`,
+    url: `/cards/${id}`,
     method: 'delete',
   })
 }

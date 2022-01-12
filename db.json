@@ -1,46 +1,34 @@
 {
-  "list": [
+  "lists": [
     {
       "title": "test",
+      "id": 1
+    },
+    {
+      "title": "",
+      "id": 2
+    },
+    {
+      "title": "",
       "id": 3
     },
     {
-      "title": "testtest",
+      "title": "",
       "id": 4
-    },
-    {
-      "title": "tsetst",
-      "id": 5
-    },
-    {
-      "title": "setset",
-      "id": 6
     }
   ],
-  "card": [
+  "cards": [
     {
-      "cardId": 2,
-      "title": "test",
-      "description": "test",
-      "id": 6
+      "cardId": 1,
+      "title": "ㅇㅇ",
+      "description": "ㅇㅇ",
+      "id": 1
     },
     {
-      "cardId": 3,
-      "title": "testset",
-      "description": "setset",
-      "id": 10
-    },
-    {
-      "cardId": 4,
-      "title": "drydydry",
-      "description": "drydry",
-      "id": 12
-    },
-    {
-      "cardId": 6,
-      "title": "estt",
-      "description": "stste",
-      "id": 13
+      "cardId": 1,
+      "title": "ㅇㅇ",
+      "description": "ㅇㅇ",
+      "id": 2
     }
   ]
 }

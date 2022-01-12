@@ -58,10 +58,12 @@ export default {
       }
     },
   },
+
   methods: {
     resetData() {
       this.form.title = ''
       this.form.description = ''
+      console.log(this.element)
     },
     handleSubmit() {
       this.form.cardId = this.list.id
@@ -74,8 +76,8 @@ export default {
           .catch((error) => {})
       }
     },
-    handleCloseDialog() {
-      this.$emit('handleCloseDialog')
+    handleCloseDialog(reset) {
+      this.$emit('handleCloseDialog', reset === true)
     },
   },
 }
