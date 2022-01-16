@@ -5,30 +5,37 @@
       "id": 1
     },
     {
-      "title": "",
+      "title": "tet",
       "id": 2
     },
     {
-      "title": "",
-      "id": 3
-    },
-    {
-      "title": "",
+      "title": "tsetsetset",
       "id": 4
     }
   ],
   "cards": [
     {
-      "cardId": 1,
-      "title": "ㅇㅇ",
-      "description": "ㅇㅇ",
-      "id": 1
+      "title": "test",
+      "description": "setst",
+      "id": 4
     },
     {
-      "cardId": 1,
-      "title": "ㅇㅇ",
-      "description": "ㅇㅇ",
-      "id": 2
+      "listId": 1,
+      "title": "test",
+      "description": "stsetset",
+      "id": 6
+    },
+    {
+      "listId": 1,
+      "title": "tsetset",
+      "description": "setwetwet",
+      "id": 7
+    },
+    {
+      "listId": 2,
+      "title": "ww",
+      "description": "ww",
+      "id": 9
     }
   ]
 }

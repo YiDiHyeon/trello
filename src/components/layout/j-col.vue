@@ -12,6 +12,18 @@ export default {
       type: [String, Number],
       default: '24',
     },
+    xs: {
+      type: [String, Number],
+      default: null,
+    },
+    md: {
+      type: [String, Number],
+      default: null,
+    },
+    lg: {
+      type: [String, Number],
+      default: null,
+    },
   },
 }
 </script>

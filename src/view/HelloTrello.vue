@@ -5,12 +5,20 @@
     </header>
     <article>
       <div class="addListWrap">
-        <input v-model="title" placeholder="Add new list" type="text" class="input" />
-        <button class="btn red" @click="addList">List Add+</button>
+        <input v-model="title" placeholder="Add new lists" type="text" class="input" />
+        <button class="btn red" @click="addList">lists Add+</button>
       </div>
       <j-row>
-        <draggable v-model="list" v-bind="listDragOptions" group="list" :move="onMove">
-          <j-col v-for="element in list" :key="element.id" cols="6" class="list-group-item">
+        <draggable v-model="lists" v-bind="listDragOptions" group="lists" :move="onMove">
+          <j-col
+            v-for="element in lists"
+            :key="element.id"
+            cols="6"
+            lg="6"
+            md="12"
+            xs="24"
+            class="lists-group-item"
+          >
             <div class="card">
               <div class="title">
                 <b> {{ element.title }}</b>
@@ -26,8 +34,12 @@
                   :move="onMove"
                 >
                   <j-row v-for="item in element.cards" :key="item.id" class="card">
-                    <!--                    <div @click="handleOpenCard(item)">{{ item.title }}</div>-->
-                    <div>{{ item.title }}</div>
+                    <div><b>Title</b><br />{{ item.title }}</div>
+                    <div><b>Description</b><br />{{ item.description }}</div>
+                    <div>
+                      <button class="btn" @click="deleteCard(item)">delete</button
+                      ><button class="btn" @click="modifyCard(item)">modify</button>
+                    </div>
                   </j-row>
                 </draggable>
               </j-row>
@@ -40,15 +52,14 @@
     </article>
     <card-dialog
       :visible.sync="cardDialog.visible"
-      :list="cardDialog.list"
-      :card="cardDialog.item"
+      :element="cardDialog.element"
       @handleCloseDialog="handleCloseInfoDialog"
     ></card-dialog>
   </section>
 </template>
 <script>
 import draggable from 'vuedraggable'
-import { getTrelloList, postTrelloList, deleteTrelloList } from '@/apis/api/api'
+import { getTrelloList, postTrelloList, deleteTrelloList, deleteTrelloCard } from '@/apis/api/api'
 import JRow from '@/components/layout/j-row'
 import JCol from '@/components/layout/j-col'
 import CardDialog from '@/view/components/cardDialog'
@@ -64,7 +75,7 @@ export default {
         card: {},
       },
       newListDescription: '',
-      list: [],
+      lists: [],
       cards: [],
       title: '',
       test: '',
@@ -114,14 +125,16 @@ export default {
 
     handleCloseInfoDialog(reset) {
       this.cardDialog.visible = false
+      console.log(this.lists)
       if (reset) {
+        console.log(1111)
         this.getList()
       }
     },
     getList() {
       getTrelloList()
         .then((response) => {
-          this.list = response
+          this.lists = response
           console.log(response)
         })
         .catch((error) => {})
@@ -149,9 +162,23 @@ export default {
         })
         .catch((error) => {})
     },
-    addCard(list) {
-      this.cardDialog.list = list
+    addCard(element) {
+      this.cardDialog.element = element
       this.cardDialog.visible = true
+    },
+    deleteCard(item) {
+      if (confirm('정말 삭제?')) {
+        deleteTrelloCard(item.id)
+          .then((response) => {
+            this.getList()
+          })
+          .catch(() => {
+            // alert('리스트 삭제가 취소되었습니다.')
+          })
+      }
+    },
+    modifyCard(element) {
+      console.log(222)
     },
   },
 }

@@ -37,7 +37,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    list: {
+    element: {
       type: Object,
       default: () => {},
     },
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       form: {
-        cardId: '',
+        listId: '',
         title: '',
         description: '',
       },
@@ -58,7 +58,9 @@ export default {
       }
     },
   },
-
+  created() {
+    console.log(this.element)
+  },
   methods: {
     resetData() {
       this.form.title = ''
@@ -66,12 +68,12 @@ export default {
       console.log(this.element)
     },
     handleSubmit() {
-      this.form.cardId = this.list.id
+      this.form.listId = this.element.id
       if (confirm('등록할꺼?')) {
         postTrelloCard(this.form)
           .then((response) => {
             console.log(response)
-            this.handleCloseDialog()
+            this.handleCloseDialog(true)
           })
           .catch((error) => {})
       }
