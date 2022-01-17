@@ -1,16 +1,16 @@
 {
   "lists": [
     {
-      "title": "test",
+      "title": "트렐로!",
       "id": 1
     },
     {
-      "title": "tet",
+      "title": "",
       "id": 2
     },
     {
-      "title": "tsetsetset",
-      "id": 4
+      "title": "",
+      "id": 3
     }
   ],
   "cards": [
@@ -18,24 +18,6 @@
       "title": "test",
       "description": "setst",
       "id": 4
-    },
-    {
-      "listId": 1,
-      "title": "test",
-      "description": "stsetset",
-      "id": 6
-    },
-    {
-      "listId": 1,
-      "title": "tsetset",
-      "description": "setwetwet",
-      "id": 7
-    },
-    {
-      "listId": 2,
-      "title": "ww",
-      "description": "ww",
-      "id": 9
     }
   ]
 }

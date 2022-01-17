@@ -58,9 +58,6 @@ export default {
       }
     },
   },
-  created() {
-    console.log(this.element)
-  },
   methods: {
     resetData() {
       this.form.title = ''
@@ -72,7 +69,6 @@ export default {
       if (confirm('등록할꺼?')) {
         postTrelloCard(this.form)
           .then((response) => {
-            console.log(response)
             this.handleCloseDialog(true)
           })
           .catch((error) => {})

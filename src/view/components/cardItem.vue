@@ -29,9 +29,7 @@ export default {
     this.getDetail()
   },
   methods: {
-    getDetail() {
-      console.log(this.card)
-    },
+    getDetail() {},
     deleteCard() {
       deleteTrelloCard(this.card.id)
         .then((response) => {

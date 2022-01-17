@@ -89,10 +89,6 @@ export default {
         animation: 150, // ms, 정렬시 애니메이션 속도 이동 항목,`0 '— 애니메이션 없음
         easing: 'cubic-bezier(1, 0, 0, 1)', // 애니메이션 완화. 기본값은 null입니다. 예는 https://easings.net/을 참조하세요.
         ghostClass: 'ghost', // 놓을 장소의 클래스명 지정
-        chosenClass: 'sortable-chosen', // 선택 항목의 클래스명 지정
-        dragClass: 'sortable-drag', // 드래그하는 항목의 클래스명 지정
-        // handle: '.test',
-        // swapThreshold: 1,
       }
     },
     cardDragOptions() {
@@ -102,9 +98,6 @@ export default {
         animation: 150, // ms, 정렬시 애니메이션 속도 이동 항목,`0 '— 애니메이션 없음
         easing: 'cubic-bezier(1, 0, 0, 1)', // 애니메이션 완화. 기본값은 null입니다. 예는 https://easings.net/을 참조하세요.
         ghostClass: 'ghost', // 놓을 장소의 클래스명 지정
-        chosenClass: 'sortable-chosen', // 선택 항목의 클래스명 지정
-        dragClass: 'sortable-drag', // 드래그하는 항목의 클래스명 지정
-        // handle: '.test',
       }
     },
   },
@@ -125,9 +118,7 @@ export default {
 
     handleCloseInfoDialog(reset) {
       this.cardDialog.visible = false
-      console.log(this.lists)
       if (reset) {
-        console.log(1111)
         this.getList()
       }
     },
@@ -135,7 +126,6 @@ export default {
       getTrelloList()
         .then((response) => {
           this.lists = response
-          console.log(response)
         })
         .catch((error) => {})
     },
@@ -155,12 +145,16 @@ export default {
       const newListTitle = {
         title: this.title,
       }
-      postTrelloList(newListTitle)
-        .then((response) => {
-          this.getList()
-          this.title = ''
-        })
-        .catch((error) => {})
+      if (this.form.title === '') {
+        alert('타이틀을 입력해주세요')
+      } else {
+        postTrelloList(newListTitle)
+          .then((response) => {
+            this.getList()
+            this.title = ''
+          })
+          .catch((error) => {})
+      }
     },
     addCard(element) {
       this.cardDialog.element = element
@@ -183,3 +177,8 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+.ghost {
+  border: 2px solid lightcoral;
+}
+</style>
