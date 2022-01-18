@@ -25,6 +25,15 @@ export const deleteTrelloList = (id) => {
   })
 }
 
+/* lists 수정 */
+export const ModifyTrelloList = (id, data) => {
+  return request({
+    url: `/lists/${id}`,
+    method: 'put',
+    data,
+  })
+}
+
 /* cards lists */
 export const getTrelloCard = () => {
   return request({
@@ -47,5 +56,14 @@ export const deleteTrelloCard = (id) => {
   return request({
     url: `/cards/${id}`,
     method: 'delete',
+  })
+}
+
+/* lists 수정 */
+export const ModifyTrelloCard = (id, data) => {
+  return request({
+    url: `/cards/${id}`,
+    method: 'put',
+    data,
   })
 }

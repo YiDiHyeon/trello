@@ -21,9 +21,18 @@
           >
             <div class="card">
               <div class="title">
-                <b> {{ element.title }}</b>
-                <div class="btn-wrap">
+                <b v-if="titleView"> {{ element.title }}</b>
+                <input v-else v-model="element.title" type="text" class="input" />
+                <div v-if="titleView" class="btn-wrap">
                   <button class="btn gray mg-l-10" @click="listDelete(element)">Del</button>
+                  <button class="btn gray mg-l-10" @click="titleView = false">Modi</button>
+                </div>
+                <div v-else class="btn-wrap">
+                  <button v-if="titleView" class="btn gray mg-l-10" @click="listDelete(element)">
+                    Del
+                  </button>
+                  <button class="btn gray mg-l-10" @click="listModify(element)">OK</button>
+                  <button class="btn gray mg-l-10" @click="titleView = true">Cancel</button>
                 </div>
               </div>
               <j-row>
@@ -53,13 +62,19 @@
     <card-dialog
       :visible.sync="cardDialog.visible"
       :element="cardDialog.element"
-      @handleCloseDialog="handleCloseInfoDialog"
+      @handleCloseDialog="handleCloseCardDialog"
     ></card-dialog>
   </section>
 </template>
 <script>
 import draggable from 'vuedraggable'
-import { getTrelloList, postTrelloList, deleteTrelloList, deleteTrelloCard } from '@/apis/api/api'
+import {
+  getTrelloList,
+  postTrelloList,
+  deleteTrelloList,
+  deleteTrelloCard,
+  ModifyTrelloList,
+} from '@/apis/api/api'
 import JRow from '@/components/layout/j-row'
 import JCol from '@/components/layout/j-col'
 import CardDialog from '@/view/components/cardDialog'
@@ -74,6 +89,10 @@ export default {
         width: '80%',
         card: {},
       },
+      list: {
+        title: '',
+      },
+      titleView: true,
       newListDescription: '',
       lists: [],
       cards: [],
@@ -110,13 +129,18 @@ export default {
     },
     onMove(evt) {
       console.log(evt)
+      console.log(evt.draggedContext)
+      if (evt.draggedContext) {
+        this.getList()
+        console.log(11111)
+      }
+      return true
     },
     handleOpenCard(item) {
       this.cardDialog.card = item
       this.cardDialog.visible = true
     },
-
-    handleCloseInfoDialog(reset) {
+    handleCloseCardDialog(reset) {
       this.cardDialog.visible = false
       if (reset) {
         this.getList()
@@ -130,7 +154,6 @@ export default {
         .catch((error) => {})
     },
     listDelete(element) {
-      console.log(element)
       if (confirm('정말 삭제?')) {
         deleteTrelloList(element.id)
           .then((response) => {
@@ -141,11 +164,22 @@ export default {
           })
       }
     },
+    listModify(element) {
+      console.log(element)
+      this.titleView = false
+      ModifyTrelloList(element.id, { title: element.title })
+        .then((response) => {
+          console.log(response)
+          this.titleView = true
+          this.getList()
+        })
+        .catch((error) => {})
+    },
     addList() {
       const newListTitle = {
         title: this.title,
       }
-      if (this.form.title === '') {
+      if (this.title === '') {
         alert('타이틀을 입력해주세요')
       } else {
         postTrelloList(newListTitle)
